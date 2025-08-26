@@ -15,7 +15,7 @@ fetch("/data/DATA.json")
     console.log(data);
 
     const container = document.getElementById("story-list");
-    data.forEach((story) => {
+    data.listStory.forEach((story) => {
       const storyCard = document.createElement("story-card");
       storyCard.setAttribute("name", story.name);
       storyCard.setAttribute("photo", story.photoUrl);
