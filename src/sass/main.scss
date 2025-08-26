@@ -1,4 +1,12 @@
+// main.scss
 @use "variables";
 @use "mixins";
 @use "navbar";
 @use "card";
+
+body {
+  font-family: variables.$font-base;
+  background-color: variables.$background-color;
+  margin: 0;
+  padding: 0;
+}

@@ -1,0 +1,27 @@
+// _card.scss
+@use "variables" as *;
+@use "mixins" as *;
+
+.card-custom {
+  background-color: white;
+  border-radius: $border-radius;
+  padding: $spacing-md;
+  margin-bottom: $spacing-lg;
+  @include box-shadow;
+
+  .card-header {
+    font-weight: bold;
+    margin-bottom: $spacing-sm;
+  }
+
+  .card-body {
+    color: $text-color;
+    font-size: 0.9rem;
+  }
+
+  .card-footer {
+    font-size: 0.8rem;
+    color: gray;
+    text-align: right;
+  }
+}
