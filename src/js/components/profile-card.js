@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
 
 class ProfileCard extends LitElement {
   static properties = {
@@ -7,21 +7,9 @@ class ProfileCard extends LitElement {
     bio: { type: String },
   };
 
-  static styles = css`
-    .profile-card {
-      border: 1px solid #ccc;
-      padding: 1rem;
-      border-radius: 8px;
-      text-align: center;
-      max-width: 200px;
-    }
-    img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      margin-bottom: 0.5rem;
-    }
-  `;
+  createRenderRoot() {
+    return this; // pakai DOM biasa supaya Bootstrap bisa diterapkan
+  }
 
   constructor() {
     super();
@@ -32,10 +20,17 @@ class ProfileCard extends LitElement {
 
   render() {
     return html`
-      <div class="profile-card">
-        <img src="${this.photo}" alt="${this.name}" />
-        <h4>${this.name}</h4>
-        <p>${this.bio}</p>
+      <div class="card text-center" style="width: 18rem; margin: 1rem;">
+        <img
+          src="${this.photo}"
+          class="card-img-top rounded-circle mx-auto mt-3"
+          style="width: 100px; height: 100px; object-fit: cover;"
+          alt="${this.name}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">${this.name}</h5>
+          <p class="card-text">${this.bio}</p>
+        </div>
       </div>
     `;
   }
