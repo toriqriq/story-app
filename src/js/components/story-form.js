@@ -35,10 +35,11 @@ class StoryForm extends LitElement {
     }
 
     const eventDetail = {
+      id: `story-${Date.now()}`, // bikin id unik sederhana
       name: this.name,
-      photo: this.photo,
-      desc: this.desc,
-      date: new Date().toLocaleDateString(),
+      description: this.desc, // samakan dengan DATA.json
+      photoUrl: this.photo, // samakan dengan DATA.json
+      createdAt: new Date().toISOString(), // format ISO (bukan locale date)
     };
     this.dispatchEvent(
       new CustomEvent("story-added", {
@@ -48,10 +49,18 @@ class StoryForm extends LitElement {
       })
     );
 
+    // Reset form
     this.name = "";
     this.photo = "";
     this.desc = "";
     form.classList.remove("was-validated");
+
+    // Tampilkan alert
+    const alertBox = this.querySelector("#alert-success");
+    if (alertBox) {
+      alertBox.classList.remove("d-none");
+      setTimeout(() => alertBox.classList.add("d-none"), 3000); // sembunyikan otomatis
+    }
   }
 
   render() {
@@ -103,6 +112,15 @@ class StoryForm extends LitElement {
 
         <button type="submit" class="btn btn-primary">Tambah Story</button>
       </form>
+
+      <!-- Alert Bootstrap -->
+      <div
+        id="alert-success"
+        class="alert alert-success mt-3 d-none"
+        role="alert"
+      >
+        Story berhasil ditambahkan!
+      </div>
     `;
   }
 }

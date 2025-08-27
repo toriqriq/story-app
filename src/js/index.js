@@ -22,31 +22,53 @@ function router() {
 function renderDashboard() {
   app.innerHTML = `
     <h2 class="mb-3">Daftar Story</h2>
+
+    <!-- Spinner Loading -->
+    <div id="loading-spinner" class="d-flex justify-content-center my-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
     <div id="story-list" class="row g-3"></div>
   `;
 
   const container = document.getElementById("story-list");
+  const spinner = document.getElementById("loading-spinner");
 
-  // Fetch data
+  // Fetch data dari file JSON
   fetch("/data/DATA.json")
     .then((response) => response.json())
     .then((data) => {
-      data.listStory.forEach((story) => {
-        // Bungkus pakai col agar bisa responsive grid
+      spinner.style.display = "none";
+
+      // Gabungkan dengan story dari localStorage
+      let stories = JSON.parse(localStorage.getItem("stories") || "[]");
+      const allStories = [...stories, ...data.listStory];
+
+      allStories.forEach((story) => {
         const col = document.createElement("div");
-        col.className = "col-md-6"; // 2 kolom di desktop, 1 di mobile
+        col.className = "col-md-6";
 
         const storyCard = document.createElement("story-card");
         storyCard.setAttribute("name", story.name);
-        storyCard.setAttribute("photo", story.photoUrl);
-        storyCard.setAttribute("desc", story.description);
-        storyCard.setAttribute("date", story.createdAt);
+        storyCard.setAttribute("photo", story.photo || story.photoUrl);
+        storyCard.setAttribute("desc", story.desc || story.description);
+        storyCard.setAttribute("date", story.date || story.createdAt);
 
         col.appendChild(storyCard);
         container.appendChild(col);
       });
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      spinner.style.display = "none";
+      console.error(err);
+      container.innerHTML = `
+        <div class="alert alert-danger" role="alert">
+          Gagal memuat data story.
+        </div>
+      `;
+    });
 }
 
 function renderAddPage() {
@@ -56,8 +78,13 @@ function renderAddPage() {
   `;
 
   document.querySelector("story-form").addEventListener("story-added", (e) => {
-    // simpan data ke localStorage atau push ke list story
-    console.log("Story baru:", e.detail);
+    const story = e.detail;
+
+    // simpan ke localStorage supaya persist
+    let stories = JSON.parse(localStorage.getItem("stories") || "[]");
+    stories.unshift(story);
+    localStorage.setItem("stories", JSON.stringify(stories));
+
     alert("Story berhasil ditambahkan!");
     window.location.hash = "#/"; // balik ke dashboard
   });
