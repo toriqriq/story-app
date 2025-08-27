@@ -25,3 +25,10 @@
     text-align: right;
   }
 }
+
+.card-custom img {
+  max-height: 150px; // batas tinggi
+  width: 100%;
+  object-fit: cover; // supaya tidak gepeng
+  border-radius: $border-radius;
+}

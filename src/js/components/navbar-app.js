@@ -1,27 +1,25 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
 
 class NavbarApp extends LitElement {
-  static styles = css`
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background-color: #4f46e5;
-      color: white;
-    }
-    h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-  `;
+  createRenderRoot() {
+    return this; // pakai global CSS Bootstrap
+  }
 
   render() {
     return html`
-      <nav>
-        <h1>Story App</h1>
-        <div>
-          <slot name="nav-links"></slot>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#/">Story App</a>
+          <div>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#/">Dasbor</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#/add">Tambah Story</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     `;

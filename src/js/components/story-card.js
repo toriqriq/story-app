@@ -8,6 +8,10 @@ class StoryCard extends LitElement {
     date: { type: String },
   };
 
+  createRenderRoot() {
+    return this; // supaya SCSS global masuk
+  }
+
   static styles = css`
     .card {
       margin: 1rem 0;
@@ -28,12 +32,12 @@ class StoryCard extends LitElement {
 
   render() {
     return html`
-      <div class="card shadow-sm">
+      <div class="card-custom">
         <img src="${this.photo}" alt="${this.name}" />
         <div class="card-body">
-          <h5 class="card-title">${this.name}</h5>
+          <h5 class="card-header">${this.name}</h5>
           <p class="card-text">${this.desc}</p>
-          <small class="text-muted">${this.date}</small>
+          <div class="card-footer">${this.date}</div>
         </div>
       </div>
     `;
