@@ -3,23 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
-
-    <title><%= htmlWebpackPlugin.options.title %> | Story App</title>
+    <title>Story App</title>
   </head>
   <body>
-    <header>
-      <!-- Your header and navbar -->
-    </header>
+    <!-- Navbar -->
+    <navbar-app></navbar-app>
 
     <main class="container my-4">
+      <!-- Form tambah story -->
+      <story-form></story-form>
+
       <h2 class="mb-3">Daftar Story</h2>
       <div id="story-list" class="row"></div>
     </main>
 
-    <footer>
-      <!-- Your footer -->
-    </footer>
+    <!-- Footer -->
+    <footer-app></footer-app>
+
+    <script type="module" src="./index.js"></script>
   </body>
 </html>
