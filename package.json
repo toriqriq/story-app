@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
+    "axios": "^1.11.0",
     "bootstrap": "^5.3.7",
     "lit": "^3.3.1"
   }
