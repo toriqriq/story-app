@@ -18,6 +18,9 @@ function router() {
   const hash = window.location.hash || "#/";
   const token = localStorage.getItem("token");
 
+  // render navbar sesuai status login
+  renderNavbar();
+
   if (!token && hash !== "#/login" && hash !== "#/register") {
     window.location.hash = "#/login";
     return;
@@ -31,6 +34,17 @@ function router() {
     renderLoginPage();
   } else if (hash === "#/register") {
     renderRegisterPage();
+  }
+}
+
+function renderNavbar() {
+  const navbarContainer = document.getElementById("navbar-container");
+  navbarContainer.innerHTML = ""; // kosongkan dulu
+
+  const token = localStorage.getItem("token");
+  if (token) {
+    const navbar = document.createElement("navbar-app");
+    navbarContainer.appendChild(navbar);
   }
 }
 
