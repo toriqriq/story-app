@@ -98,7 +98,7 @@ async function renderDashboard() {
 
   try {
     const stories = await fetchStories();
-    spinner.style.display = "none";
+    spinner.classList = "d-none";
 
     stories.forEach((story) => {
       const col = document.createElement("div");
@@ -117,7 +117,7 @@ async function renderDashboard() {
       container.appendChild(col);
     });
   } catch (err) {
-    spinner.style.display = "none";
+    spinner.classList = "d-none";
     console.error(err);
     container.innerHTML = `
       <div class="alert alert-danger" role="alert">
