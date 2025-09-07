@@ -5,6 +5,7 @@ class LoginPage extends LitElement {
   static properties = {
     email: { type: String },
     password: { type: String },
+    loading: { type: Boolean },
   };
 
   static styles = css`
@@ -18,11 +19,14 @@ class LoginPage extends LitElement {
     super();
     this.email = "";
     this.password = "";
+    this.loading = false;
     this.createRenderRoot = () => this; // pakai DOM biasa
   }
 
   async handleLogin(e) {
     e.preventDefault();
+
+    this.loading = true; // tampilkan loading
     try {
       const response = await axios.post(
         "https://story-api.dicoding.dev/v1/login",
@@ -42,6 +46,8 @@ class LoginPage extends LitElement {
     } catch (err) {
       alert("Login gagal, cek email & password.");
       console.error(err);
+    } finally {
+      this.loading = false; // sembunyikan loading
     }
   }
 
@@ -68,7 +74,16 @@ class LoginPage extends LitElement {
             required
           />
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          ?disabled=${this.loading}
+        >
+          ${this.loading
+            ? html`<span class="spinner-border spinner-border-sm me-2"></span>
+                Loading...`
+            : "Login"}
+        </button>
       </form>
 
       <p>Belum punya akun? <a href="#/register">Daftar di sini</a></p>

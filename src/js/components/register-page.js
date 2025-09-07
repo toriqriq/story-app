@@ -2,13 +2,19 @@ import { LitElement, html, css } from "lit";
 import axios from "axios";
 
 class RegisterPage extends LitElement {
-  static properties = { name: String, email: String, password: String };
+  static properties = {
+    name: String,
+    email: String,
+    password: String,
+    loading: Boolean,
+  };
 
   constructor() {
     super();
     this.name = "";
     this.email = "";
     this.password = "";
+    this.loading = false;
     this.createRenderRoot = () => this; // pakai DOM biasa
   }
 
@@ -21,18 +27,22 @@ class RegisterPage extends LitElement {
 
   async handleRegister(e) {
     e.preventDefault();
+
+    this.loading = true; // tampilkan loading
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://story-api.dicoding.dev/v1/register",
         { name: this.name, email: this.email, password: this.password },
         { headers: { "Content-Type": "application/json" } }
       );
 
       alert("Registrasi berhasil! Silakan login.");
-      window.location.hash = "#/login"; // arahkan ke login
+      window.location.hash = "#/login";
     } catch (err) {
       alert("Gagal daftar, cek console.");
       console.error(err);
+    } finally {
+      this.loading = false; // sembunyikan loading
     }
   }
 
@@ -71,8 +81,20 @@ class RegisterPage extends LitElement {
             minlength="6"
           />
         </div>
-        <button type="submit" class="btn btn-success">Daftar</button>
+
+        <button
+          type="submit"
+          class="btn btn-success w-100"
+          ?disabled=${this.loading}
+        >
+          ${this.loading
+            ? html`<span class="spinner-border spinner-border-sm me-2"></span>
+                Loading...`
+            : "Daftar"}
+        </button>
       </form>
+
+      <p>Sudah punya akun? <a href="#/login">Login di sini</a></p>
     `;
   }
 }
