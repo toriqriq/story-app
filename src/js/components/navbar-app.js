@@ -5,6 +5,11 @@ class NavbarApp extends LitElement {
     return this; // pakai global CSS Bootstrap
   }
 
+  handleLogout() {
+    localStorage.removeItem("token");
+    window.location.hash = "#/login";
+  }
+
   render() {
     return html`
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -17,6 +22,14 @@ class NavbarApp extends LitElement {
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#/add">Tambah Story</a>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="btn btn-danger nav-link"
+                  @click="${this.handleLogout}"
+                >
+                  Logout
+                </button>
               </li>
             </ul>
           </div>

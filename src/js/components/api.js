@@ -19,24 +19,21 @@ export async function fetchStories() {
 }
 
 // Tambah story baru
-export async function addStory({ name, description, photoUrl }) {
+export async function addStory(formData) {
   try {
-    const token = localStorage.getItem("token");
-    if (!token) throw new Error("User belum login");
-
     const response = await axios.post(
-      `${BASE_URL}/stories`,
-      { name, description, photoUrl },
+      "https://story-api.dicoding.dev/v1/stories",
+      formData,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
         },
       }
     );
-    return response.data.story;
-  } catch (error) {
-    console.error("Gagal menambahkan story:", error);
-    throw error;
+    return response.data;
+  } catch (err) {
+    console.error("Gagal menambahkan story:", err);
+    throw err;
   }
 }
